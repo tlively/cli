@@ -179,6 +179,6 @@ COPY ./etc/vim/vimrc.local /etc/vim/
 # prepend /usr/local/{bin,sbin} to PATH
 ENV PATH /usr/local/sbin:/usr/local/bin:"$PATH"
 
-# run shell in /root
-WORKDIR /root
+# run shell in /mnt
+WORKDIR /mnt
 CMD ["bash", "-l"]
