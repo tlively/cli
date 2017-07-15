@@ -15,6 +15,7 @@ ENV TERM xterm
 # packages
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:cs50/ppa && \
     add-apt-repository -y ppa:ondrej/php && \
     add-apt-repository -y ppa:git-core/ppa && \
     apt-get update && \
@@ -36,6 +37,7 @@ RUN apt-get update && \
         git \
         ImageMagick \
         info \
+        libcs50 \
         man \
         mysql-client \
         nano \
@@ -96,7 +98,7 @@ RUN apt-get update && \
     /opt/rbenv/bin/rbenv install 2.4.0 && \
     /opt/rbenv/bin/rbenv rehash && \
     /opt/rbenv/bin/rbenv global 2.4.0
-ENV PATH "$RBENV_ROOT"/shims:"$RBENV_ROOT"/bin:"$PATH"
+ENV PATH "$PATH":"$RBENV_ROOT"/shims:"$RBENV_ROOT"/bin
 
 # install fpm, asciidoctor
 # https://github.com/asciidoctor/jekyll-asciidoc/issues/135#issuecomment-241948040
@@ -139,10 +141,12 @@ RUN apt-get update && \
     /opt/pyenv/bin/pyenv install 3.6.0 && \
     /opt/pyenv/bin/pyenv rehash && \
     /opt/pyenv/bin/pyenv global 3.6.0
-ENV PATH "$PYENV_ROOT"/shims:"$PYENV_ROOT"/bin:"$PATH"
+ENV PATH "$PATH":"$PYENV_ROOT"/shims:"$PYENV_ROOT"/bin
 
 # install CS50-specific packages
-RUN pip install cs50 render50 submit50
+RUN apt-get update && \
+    apt-get install libxslt-dev && \
+    pip install cs50 render50 submit50
 
 # install git-lfs
 # https://packagecloud.io/github/git-lfs/install#manual
